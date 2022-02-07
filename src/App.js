@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './component/Home'
 import Catalog from './component/Catalog'
 import Product from './component/Product'
@@ -8,15 +8,10 @@ import Header from './component/Header'
 import products from './assets/products'
 
 const App = () => {
-    const [cartItems, setCartItems] = useState([
-        {
-        product: '',
-        quantity: 0
-        }
-    ])
+    const [cartItems, setCartItems] = useState([])
     const [subtotal, setSubtotal] = useState('')
-    const [selectedProduct, setSelectedProduct] = useState({})
-    const [selectedCategory, setSelectedCategory] = useState('')
+    const [selectedProduct, setSelectedProduct] = useState('')
+    const [selectedCategory, setSelectedCategory] = useState('All Models')
 
     //when a category is clicked on
         //do i need state for selectedCategory? maybe for when I return to the catalog?
@@ -32,35 +27,94 @@ const App = () => {
         //setSubtotal according to items in cart
     //when cart button is clicked on
         //rout to cart
-        
+    
+    // useEffect(() => {
+    //     localStorage.setItem('cartItems', JSON.stringify(cartItems))
+    // }, [cartItems])
+
+    // useEffect(() => {
+    //     setCartItems(JSON.parse(localStorage.getItem('cartItems')))
+    // },[])
+
+    const handleCatChange = (cat) => {
+        setSelectedCategory(cat)
+        console.log('handleCat')
+        console.log(cat)
+    }
+
+    const handleProdSelect = (id) => {
+        const selected = products.find(product => product.id === id)
+        setSelectedProduct(selected)
+        console.log('handleProd')
+        console.log(selected)
+    }
+
+    const closeProduct = () => {
+        setSelectedProduct({})
+    }
+    
+    const addToCart = (id) => {
+        setCartItems(prevCart => {
+            const cartCopy = [...prevCart]
+            const item = products.find(product => product.id === id)    
+            const newItem = {id: item.id, price: item.price, quantity: 1}
+            cartCopy.push(newItem)
+            return cartCopy
+        })
+        setSubtotal(() => {
+            const newSub = cartItems.reduce((acc, curr) => {
+                    return acc + parseInt(curr.price) * parseInt(curr.quantity)
+                },0)
+            console.log(newSub) 
+            return parseInt(newSub)
+        })
+        console.log(cartItems, subtotal)
+    }
 
     return (
         <div>
-            <Header />
+            <Header 
+                cartItems={cartItems}
+            />
             <BrowserRouter>
-                <Switch>
-                    <Route path='/'>
+                <Routes>
+                    <Route path='/' element={
                         <Home />
+                    }>   
                     </Route>
-                    <Route path='/catalog'>
+                    <Route path='/catalog' element={
                         <Catalog 
                             products={products}
+                            selectedCategory={selectedCategory}
+                            addToCart={addToCart}
+                            handleCatChange={handleCatChange}
+                            handleProdSelect={handleProdSelect}
                         />
+                    }>
                     </Route>
-                    <Route path='/product'> 
-                        <Product 
-                            product={selectedProduct}
-                        />
-                    </Route>
-                    <Route path='/cart'> 
+                    <Route path='/cart' element={ 
                         <Cart 
                             cartItems={cartItems}
+                            subtotal={subtotal}
                         />
-                    </Route>
-                </Switch>
+                    }>
+                    </Route> 
+                    <Route path='/product' element={
+                        <Product 
+                            product={selectedProduct}
+                            closeProduct={closeProduct}
+                        />
+                    }>    
+                    </Route> 
+                </Routes>
             </BrowserRouter>
         </div> 
     )
 }
 
 export default App
+
+/* 
+
+
+*/

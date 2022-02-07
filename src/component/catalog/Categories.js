@@ -1,18 +1,20 @@
-export default function Categories() {
+export default function Categories(props) {
     // need to change this to state-level
     // useEffect case?
-    let selected
-    const select = (e) => {
-        selected = e.target.value
+
+    const onClick = (e) => {
+        const name = e.target.innerText
+        console.log(name)
+        props.handleCatChange(name)
     }
     
     return (
-        <div>
-            <h2>Category / </h2>
-            <h2>{selected}</h2>
-            <h3 onClick={select} value="Trail">Trail</h3>
-            <h3 onClick={select} value="All-Mountain">All-Mountain</h3>
-            <h3 onClick={select} value="Enduro">Enduro</h3>
+        <div className="categories">
+            <h1>Category / {props.selectedCategory}</h1>
+            <h3 onClick={onClick}>Trail</h3>
+            <h3 onClick={onClick}>All-Mountain</h3>
+            <h3 onClick={onClick}>Enduro</h3>
+            <h3 onClick={onClick}>All Models</h3>
         </div>
     )
 }
