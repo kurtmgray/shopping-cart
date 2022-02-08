@@ -13,7 +13,7 @@ export default function Catalog (props) {
                     model={product.model}
                     size={product.size}
                     price={product.price}
-                    addToCart={props.addToCart}
+                    handleCartChange={props.handleCartChange}
                     handleProdSelect={props.handleProdSelect}
                 />    
             )
@@ -27,7 +27,7 @@ export default function Catalog (props) {
                     model={product.model}
                     size={product.size}
                     price={product.price}
-                    addToCart={props.addToCart}
+                    handleCartChange={props.handleCartChange}
                     handleProdSelect={props.handleProdSelect}
                 />    
             )
@@ -38,7 +38,7 @@ export default function Catalog (props) {
         <div className="catalog">
             <Categories 
                 selectedCategory={props.selectedCategory}
-                handleCatChange={props.handleCatChange}
+                handleCategoryChange={props.handleCategoryChange}
             />
             {sortedCards}
         </div>

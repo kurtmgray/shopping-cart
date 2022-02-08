@@ -1,17 +1,12 @@
 export default function CartItem (props) {
-    // need qty in state?
-    let qty = 1
-    const increment = () => qty += 1
-    const decrement = () => qty -= 1
-
     return (
-        <div class="cart-item">
+        <div className="cart-item">
             <img src={props.img} alt='' id={props.id}></img>
             <h3>{props.brand} {props.model} {props.size}</h3>
             <h3>{props.price}</h3>
-            <button onClick={decrement}>-</button>
-            <input type="text" value={qty}>{qty}</input>
-            <button onClick={increment}>+</button>
+            <button onClick={props.updateQuantity} name='increment'>-</button>
+            <input type="text" onChange={props.onChange} value={props.quantity}>{props.quantity}</input>
+            <button onClick={props.updateQuantity} name='decrement'>+</button>
         </div>
     )
 }

@@ -5,7 +5,7 @@ export default function Categories(props) {
     const onClick = (e) => {
         const name = e.target.innerText
         console.log(name)
-        props.handleCatChange(name)
+        props.handleCategoryChange(name)
     }
     
     return (

@@ -16,8 +16,8 @@ const products = [
         size: 'S3',
         imgSmall: status_sml,
         img: status, 
-        price: '3899',
-        stock: '3',
+        price: 3899,
+        stock: 3,
         id: uniqid() 
     },
     {
@@ -28,8 +28,8 @@ const products = [
         size: 'Medium',
         imgSmall: altitude_sml,
         img: altitude, 
-        price: '4499',
-        stock: '1', 
+        price: 4499,
+        stock: 1, 
         id: uniqid() 
     },
     {
@@ -39,8 +39,8 @@ const products = [
         size: 'Medium',
         imgSmall: optic_sml,
         img: optic, 
-        price: '3799',
-        stock: '2', 
+        price: 3799,
+        stock: 2, 
         id: uniqid() 
     },
     {
@@ -50,8 +50,8 @@ const products = [
         size: 'Large',
         imgSmall: bronson_sml,
         img: bronson, 
-        price: '8999',
-        stock: '1',
+        price: 8999,
+        stock: 1,
         id: uniqid() 
     },
 ]

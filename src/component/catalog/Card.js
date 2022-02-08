@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+
+
 export default function Card (props) {
-    const addToCart = (e) => {
+    const handleClick = (e) => {
         const id = e.target.id
-        props.addToCart(id)
+        props.handleCartChange(id)
     }
 
     const selectProduct = (e) => {
@@ -11,10 +14,10 @@ export default function Card (props) {
         
     return (
         <div className="card">
-            <a href='/product' onClick={selectProduct}><img src={props.img} alt='' id={props.id}></img></a>
+            <Link to='/product' onClick={selectProduct}><img src={props.img} alt='' id={props.id}></img></Link>
             <h2>{props.brand} {props.model} {props.size}</h2>
             <h3>{props.price} USD</h3>
-            <button onClick={addToCart} id={props.id}>Add to Cart</button>
+            <button onClick={handleClick} id={props.id}>Add to Cart</button>
         </div>
     )
 }
