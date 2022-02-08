@@ -8,33 +8,9 @@ import Header from './component/Header'
 import products from './assets/products'
 
 const App = () => {
-    const [cartItems, setCartItems] = useState([])
-    const [subtotal, setSubtotal] = useState('')
-    const [selectedProduct, setSelectedProduct] = useState('')
+    const [[cart, subtotal], setCartItems] = useState([[],0])
+    const [selectedProduct, setSelectedProduct] = useState()
     const [selectedCategory, setSelectedCategory] = useState('All Models')
-
-    //when a category is clicked on
-        //do i need state for selectedCategory? maybe for when I return to the catalog?
-        //bike cards of that category are displayed
-    //when a bike image(for now) is clicked on
-        //setSelectedProduct to the product that matches the ID of the event
-        //rout to /product
-    //when a product page is closed
-        //setSelectedProduct([])
-        //rout to /catalog
-    //when a product is added to cart
-        //add product ID and quantity to cartItems
-        //setSubtotal according to items in cart
-    //when cart button is clicked on
-        //rout to cart
-    
-    // useEffect(() => {
-    //     localStorage.setItem('cartItems', JSON.stringify(cartItems))
-    // }, [cartItems])
-
-    // useEffect(() => {
-    //     setCartItems(JSON.parse(localStorage.getItem('cartItems')))
-    // },[])
 
     const handleCategoryChange = (cat) => {
         setSelectedCategory(cat)
@@ -54,49 +30,56 @@ const App = () => {
     }
     
     const handleCartChange = (id) => {
-        setCartItems(prevCart => {
-            let newCart
+        setCartItems(([prevCart, prevSub]) => {
+            let newCart = [...prevCart]
+        
             // check to see if the wanted item is already in the array, and if the quantity is at max stock
-            // return prevCart if so
             const want = (prevCart.find(item => item.id === id))
             console.log(want)
+            // return prevCart if so
             if (want && want.quantity === want.stock){
                 console.log('max stock')
-                return prevCart
             // if it's in the cart, but doesnt meet the above condition, increment the quantity by 1
             } else if (prevCart.find(item => item.id === id)) {
+                console.log('add 1')
                 const index = prevCart.findIndex(item => item.id === id)
-                console.log(index)
                 newCart = [
-                    ...prevCart.slice(0, index),
-                    {...prevCart[index], quantity: prevCart[index].quantity + 1},
-                    ...prevCart.slice(index) 
+                    ...prevCart.splice(
+                        index, 
+                        1, 
+                        {...prevCart[index], quantity: prevCart[index].quantity + 1})
                 ]
-                return newCart
-            // if it's not, just add it at quantity: 1
+                console.log(newCart[index].quantity)
+            
+                // if it's not, just add it at quantity: 1
             } else {
-                newCart = [...prevCart]
+                console.log('new')
                 const item = products.find(product => product.id === id)    
                 const newItem = {...item, quantity: 1}
                 newCart.push(newItem)
-                return newCart
             }
-        })
-        setSubtotal(() => {
-            const newSub = cartItems.reduce((acc, curr) => {
-                    return acc + parseInt(curr.price) * parseInt(curr.quantity)
-                },0)
-            console.log(newSub) 
-            return parseInt(newSub)
-        })
-        console.log(cartItems, subtotal)
-    }
 
+            const newSub = newCart.reduce((acc, curr) => 
+                acc + curr.quantity * curr.price, 0
+            ) 
+
+            console.log(newCart, newSub)
+            return [newCart, newSub]
+
+
+        })
+
+        
+        
+
+       
+    }    
     return (
         <div>
-            
+            {JSON.stringify(cart)}
+            <p>Subtotal:{JSON.stringify(subtotal)}</p>
             <BrowserRouter>
-                <Header cartItems={cartItems}/>
+                <Header cart={cart}/>
                 <Routes>
                     <Route path='/' element={
                         <Home />
@@ -114,7 +97,7 @@ const App = () => {
                     </Route>
                     <Route path='/cart' element={ 
                         <Cart 
-                            cartItems={cartItems}
+                            cart={cart}
                             setCartItems={setCartItems}
                             subtotal={subtotal}
                         />

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 
 export default function Header (props) {
-    const totalItems = props.cartItems.reduce((acc, curr) => {
+    const totalItems = props.cart.reduce((acc, curr) => {
         return acc + curr.quantity
     }, 0)
     
