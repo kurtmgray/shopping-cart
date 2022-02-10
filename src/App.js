@@ -1,10 +1,10 @@
 import React, {useState, useReducer} from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from './component/Home'
-import Catalog from './component/Catalog'
-import Product from './component/Product'
-import Cart from './component/Cart'
-import Header from './component/Header'
+import Home from './components/Home'
+import Catalog from './components/Catalog'
+import Product from './components/Product'
+import Cart from './components/Cart'
+import Header from './components/Header'
 import products from './assets/products'
 
 const ACTIONS = {
