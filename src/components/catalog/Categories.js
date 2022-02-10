@@ -1,11 +1,7 @@
 export default function Categories(props) {
-    // need to change this to state-level
-    // useEffect case?
-
     const onClick = (e) => {
-        const name = e.target.innerText
-        console.log(name)
-        props.handleCategoryChange(name)
+        const category = e.target.innerText
+        props.handleCategoryChange(category)
     }
     
     return (

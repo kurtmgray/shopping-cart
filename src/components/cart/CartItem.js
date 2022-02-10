@@ -1,11 +1,13 @@
 export default function CartItem (props) {
     const handleQuantityClick = (e) => {
-        props.handleUpdateQuantity(e.target.id, e.target.name)
+        const id = e.target.id
+        const name = e.target.name
+        props.handleUpdateQuantity(id, name)
     }
 
     const handleRemoveClick = (e) => {
-        console.log(e.target.id)
-        props.handleRemoveItem(e.target.id)
+        const id = e.target.id
+        props.handleRemoveItem(id)
     }
     
     return (

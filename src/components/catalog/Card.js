@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 
 export default function Card (props) {
     const handleClick = (e) => {
-        props.handleAddItem(e.target.id)
+        const id = e.target.id
+        props.handleAddItem(id)
     }
 
     const handleClickProduct = (e) => {
-        props.handleProdSelect(e.target.id)
+        const id = e.target.id
+        props.handleProdSelect(id)
     }
         
     return (

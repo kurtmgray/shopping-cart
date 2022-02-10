@@ -104,8 +104,8 @@ const App = () => {
     const [selectedProduct, setSelectedProduct] = useState()
     const [selectedCategory, setSelectedCategory] = useState('All Models')
 
-    const handleCategoryChange = (cat) => {
-        setSelectedCategory(cat)
+    const handleCategoryChange = (category) => {
+        setSelectedCategory(category)
     }
 
     const handleProdSelect = (id) => {
